@@ -6,6 +6,7 @@ WidgetSpan buildRubySpan(
   required BuildContext context,
   TextStyle? style,
   TextStyle? rubyStyle,
+  TextAlign? textAlign,
   GestureTapDownCallback? onTapDown,
   GestureTapUpCallback? onTapUp,
   GestureTapCallback? onTap,
@@ -71,7 +72,7 @@ WidgetSpan buildRubySpan(
   texts.add(
     Text(
       text,
-      textAlign: TextAlign.center,
+      textAlign: textAlign,
       style: effectiveTextStyle,
     ),
   );
