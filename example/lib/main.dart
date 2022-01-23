@@ -118,27 +118,10 @@ class MyApp extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: RubyText(
-                      [
-                        RubyTextData(
-                          '検査',
-                          ruby: 'けんさけんさ',
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: RubyText(
-                      [
-                        RubyTextData(
-                          '検査検査',
-                          ruby: 'けんさ',
-                        ),
-                      ],
-                    ),
+                  TextWithRuby(text:'645年、;中臣鎌足:なかとみのかまたり;と共に、;蘇我氏:そがし;を倒した人物は（　　　）である',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      color: Colors.black, fontSize: 20),
                   ),
                 ],
               ),
@@ -149,3 +132,51 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+class TextWithRuby extends StatelessWidget {
+  late final List<String> words;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  TextWithRuby({required String text, this.style, this.textAlign}) {
+    words = text.split(';');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(children:[RubyText(
+      _buildRubyText(),
+      style: style,
+      textAlign: textAlign,
+    )],);
+  }
+
+  List<RubyTextData> _buildRubyText() {
+    List<RubyTextData> l = [];
+    const String TOKEN = ':';
+    for (String word in words) {
+      if (word.indexOf(TOKEN) != -1) {
+        List<String> w = word.split(TOKEN);
+        l.add(RubyTextData(w[0], ruby: w[1]));
+      } else {
+        l.add(RubyTextData(word));
+      }
+/*
+        if(word.length > 4) {
+          List<String> str = splitStringByLength(word, 2);
+          for(String s in str) {
+            l.add(RubyTextData(s));
+          }
+        }
+        else{
+          l.add(RubyTextData(word));
+        }
+      }
+
+ */
+    }
+    return l;
+  }
+}
+
+List<String> splitStringByLength(String str, int length) =>
+    [str.substring(0, length), str.substring(length)];
